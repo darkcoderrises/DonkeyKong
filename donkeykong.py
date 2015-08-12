@@ -404,7 +404,7 @@ class Board(object):
             PLACED = False
             while not PLACED:
                 L = random.randint(-1,1)
-                if self.board[prevX+1][prevY+L] == WALLCHAR and self.board[prevX][prevY+L] not in [DONKEYCHAR]: 
+                if self.board[prevX+1][prevY+L] == WALLCHAR and self.board[prevX][prevY+L] not in [DONKEYCHAR] and not self.checkBlocking(prevX,prevY+L): 
                     PLACED = True
                     self.Donkey[i].setPos(prevX,prevY+L)
 
@@ -426,7 +426,7 @@ class Board(object):
                 prevX = self.Player.posX
                 prevY = self.Player.posY
 
-                if self.board[prevX+1][prevY] == WALLCHAR:
+                if self.board[prevX+1][prevY] in self.abc :
                     break
 
                 self.Player.setPos(prevX+1,prevY)
@@ -486,6 +486,8 @@ class Board(object):
         os.system("clear")
         for i in xrange(0,ROWS):
             for j in xrange(0,COLUMNS):
+                if (not (i == self.Player.posX and j == self.Player.posY )) and self.board[i][j] == PLAYERCHAR:
+                    self.board[i][j] = self.abc[self.orign[i][j]]
                 if self.board[i][j] == COINCHAR:
                     sys.stdout.write( OKBLUE + self.board[i][j] + " " + ENDC)
                 elif self.board[i][j] ==  WALLCHAR :
@@ -527,6 +529,7 @@ class Board(object):
             if self.input == "q":
                 sys.exit()
 
+            #EK JUMP KE LIYE KITNA KARU
             if self.input == " ":
                 
                 self.input = getch()
@@ -534,37 +537,17 @@ class Board(object):
                     self.input = getch()
                 movement = self.input
                 
-                self.input = "w"
-                self.moveDonkey()
-                self.movePlayer()
-                self.input = movement
-                self.movePlayer()
-                self.printBoard()
+                L=["w","s"]
+                for i in range(4):
+                    self.input = L[i/2]
+                    self.moveDonkey()
+                    self.movePlayer()
+                    self.input = movement
+                    self.movePlayer()
+                    self.printBoard()
+                    time.sleep(0.2) 
 
-                time.sleep(0.2) 
-                self.input = "w"
-                self.moveDonkey()
-                self.movePlayer()
-                self.input = movement
-                self.movePlayer()
-                self.printBoard()
-
-                time.sleep(0.2) 
-                self.input = movement
-                self.moveDonkey()
-                self.movePlayer()
-                self.input = "s"
-                self.movePlayer()
-                self.printBoard()
-
-                time.sleep(0.2) 
-                self.input = movement
-                self.moveDonkey()
-                self.movePlayer()
-                self.input = "s"
-                self.movePlayer()
                 self.movePlayer(2)
-
                 self.printBoard()
 
 
