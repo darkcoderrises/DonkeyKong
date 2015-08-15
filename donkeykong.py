@@ -1,20 +1,9 @@
-#!/usr/bin/env python2
-
-#################################
-#
-#   DONKEYKONG PROTOTYPE
-#
-#   HARSHIL GOEL
-#   201401171
-#
-#################################
-
 import random
 import sys
 import os
 import time
+import threading,thread
 
-''' source for getch : http://code.activestate.com/recipes/577977-get-single-keypress/ '''
 try:
     import tty, termios
 except ImportError:
@@ -34,8 +23,8 @@ else:
             ch = sys.stdin.read(1)
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
         return ch
-''' cited code ends '''
 
 # Globals
 ROWS = 30
@@ -78,9 +67,6 @@ class Person(object):
     def setPos(self,x,y):
         self.posX = x
         self.posY = y
-
-    def getPosition():
-        return [self.posX,self.posY]
 
 class Player(Person):
     ''' Player present in the game '''
@@ -151,7 +137,7 @@ class Fireball():
     def __init__(self,x,y,dir):
         self.posX=x
         self.posY=y
-        self.dir =dir
+        self.dir = dir
 
     def setPos(self,X,Y):
         '''Set Position of Fireball'''
@@ -224,6 +210,10 @@ class Board(object):
         ''' checks Death '''
         return self.checkFireball(x, y)
 
+    def checkPlayer(self, x, y):
+        ''' checks player'''
+        return self.Player.posX == x and self.Player.posY == y
+
     def placePlayer(self,score = 0):
         ''' Places Player on the map initially with the score'''
 
@@ -260,44 +250,38 @@ class Board(object):
     def placeMap(self):
         '''Creates a Empty Map i.e. basic framework of stairs and floors'''
 
+        def set(self,i,j):
+            self.board[i][j] = WALLCHAR
+            self.orign[i][j] = 1
+
         FLOOR=ROWS-1
         for i in reversed(xrange(ROWS)):
-            self.board[i][0]=WALLCHAR
-            self.board[i][COLUMNS-1]=WALLCHAR
-            self.orign[i][0]=1
-            self.orign[i][COLUMNS-1]=1
+            set(self,i,0)
+            set(self,i,COLUMNS-1)
 
             if i!=FLOOR:
                 continue
-
             if FLOOR==2:
                 FLOOR=0
-            elif FLOOR<6:
-                FLOOR=2
             else:
-                FLOOR-=4
+                FLOOR=max(FLOOR-4,2)
             
             if i:
                 self.floor.append(i)
             if i==0 or i==ROWS-1:
                 for j in xrange(COLUMNS):
-                    self.board[i][j] = WALLCHAR
-                    self.orign[i][j] = 1
+                    set(self,i,j)
                 
             else :
                 colX = random.randint(0,COLUMNS/2-1)
                 colY = random.randint(COLUMNS/2,COLUMNS-1)
 
                 for j in xrange(colX,colY+1):
-                    self.board[i][j] = WALLCHAR
-                    self.orign[i][j] = 1
-
+                    set(self,i,j)
 
                 if i==2:
-                    self.board[1][colX] = WALLCHAR
-                    self.board[1][colY] = WALLCHAR
-                    self.orign[1][colX] = 1
-                    self.orign[1][colY] = 1
+                    set(self,1,colX)
+                    set(self,1,colY)
 
                 STAIR = True
 
@@ -368,6 +352,9 @@ class Board(object):
         if newX == ROWS-2 and newY == 1:
             return None
 
+        if self.checkPlayer(newX, newY):
+            self.Player.dies()
+
         self.board[newX][newY] = FIREBALLCHAR
 
         Fireball.setPos(newX,newY)
@@ -397,13 +384,18 @@ class Board(object):
     def moveDonkey(self):
         '''Moves all Donkey according to will'''
     
+        print "Donkey"
         for i in xrange(len(self.Donkey)):
             prevX = self.Donkey[i].posX
             prevY = self.Donkey[i].posY
             
+            k=0
             PLACED = False
             while not PLACED:
                 L = random.randint(-1,1)
+                k+=1
+                if k==3:
+                    L=0
                 if self.board[prevX+1][prevY+L] == WALLCHAR and self.board[prevX][prevY+L] not in [DONKEYCHAR] and not self.checkBlocking(prevX,prevY+L): 
                     PLACED = True
                     self.Donkey[i].setPos(prevX,prevY+L)
@@ -426,12 +418,14 @@ class Board(object):
                 prevX = self.Player.posX
                 prevY = self.Player.posY
 
-                if self.board[prevX+1][prevY] in self.abc :
+                if self.board[prevX+1][prevY] in self.abc[1:] :
                     break
 
                 self.Player.setPos(prevX+1,prevY)
                 self.board[prevX][prevY] = self.abc[self.orign[prevX][prevY]]
                 self.board[self.Player.posX][self.Player.posY] = PLAYERCHAR
+                self.printBoard()
+                time.sleep(1)
             return
 
 
@@ -456,7 +450,7 @@ class Board(object):
                         self.board[prevX][prevY] = self.abc[self.orign[prevX][prevY]]
                         self.board[self.Player.posX][self.Player.posY] = PLAYERCHAR
                         self.printBoard()
-                        time.sleep(0.3)
+                        time.sleep(0.1)
 
                 else:
                     self.Player.setPos(prevX, prevY)
@@ -489,19 +483,19 @@ class Board(object):
                 if (not (i == self.Player.posX and j == self.Player.posY )) and self.board[i][j] == PLAYERCHAR:
                     self.board[i][j] = self.abc[self.orign[i][j]]
                 if self.board[i][j] == COINCHAR:
-                    sys.stdout.write( OKBLUE + self.board[i][j] + " " + ENDC)
+                    print( OKBLUE + self.board[i][j]  + ENDC),
                 elif self.board[i][j] ==  WALLCHAR :
-                    sys.stdout.write( OKGREEN + self.board[i][j] + " " + ENDC)
+                    print( OKGREEN + self.board[i][j]  + ENDC),
                 elif self.board[i][j] == STAIRCHAR : 
-                    sys.stdout.write( HEADER + self.board[i][j] + " "+ ENDC)
+                    print( HEADER + self.board[i][j] + ENDC),
                 elif self.board[i][j] == FIREBALLCHAR:
-                    sys.stdout.write( FAIL + self.board[i][j] + " " + ENDC)
+                    print( FAIL + self.board[i][j]  + ENDC),
                 elif self.board[i][j] == PLAYERCHAR:
-                    sys.stdout.write( WARNING + self.board[i][j] + " " + ENDC)
+                    print( WARNING + self.board[i][j]  + ENDC),
                 elif self.board[i][j] == DONKEYCHAR:
-                    sys.stdout.write( FAIL + self.board[i][j] + " " + ENDC)
+                    print( FAIL + self.board[i][j]  + ENDC),
                 else:
-                    sys.stdout.write( self.board[i][j] + " ")   
+                    print( self.board[i][j] ),
             print
 
         print "\nCoins Collected :"+str(self.Player.coinsCollected())
@@ -513,12 +507,38 @@ class Board(object):
 
     def empty(self):
         ''' Removes all the Fireballs from the code '''
+
         for Donkey in self.Donkey:
             Donkey.Fireball = []
 
+    def playerDies(self):
+        ''' Protocol to as when the player dies'''
+
+        if self.life == 1:
+            os.system("clear")
+            print "You Lose"
+            sys.exit()
+
+        self.life -= 1
+        
+        prevX = self.Player.posX
+        prevY = self.Player.posY
+
+        self.Player.setPos(ROWS-2,1)
+
+        self.Player.alive = True
+
+        self.board[prevX][prevY] = self.abc[self.orign[prevX][prevY]]
+        self.board[ROWS-2][1] = PLAYERCHAR
+
+        self.printBoard()
+
+
     def play(self):
         ''' Driver Function of the Game '''
+        
         self.empty()
+        
         while True:
             self.printBoard()
             self.input = getch()
@@ -529,7 +549,6 @@ class Board(object):
             if self.input == "q":
                 sys.exit()
 
-            #EK JUMP KE LIYE KITNA KARU
             if self.input == " ":
                 
                 self.input = getch()
@@ -556,26 +575,8 @@ class Board(object):
                 self.movePlayer(1)
 
             if not self.Player.isAlive():
-                if self.life == 1:
-                    os.system("clear")
-                    print "You Lose"
-                    sys.exit()
-
-                self.life -= 1
-                
-                prevX = self.Player.posX
-                prevY = self.Player.posY
-
-                self.Player.setPos(ROWS-2,1)
-
-                self.Player.alive = True
-
-                self.board[prevX][prevY] = self.abc[self.orign[prevX][prevY]]
-                self.board[ROWS-2][1] = PLAYERCHAR
-
-                self.printBoard()
-
- 
+                self.playerDies()
+    
     def setMap(self, COIN=COINCOUNT, score = 0):
         ''' Sets the Complete Map, one by one. Orgin if filled on this perticular order:
             0. Generic char (blank space)
