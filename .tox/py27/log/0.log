@@ -1,0 +1,5 @@
+/home/harshil/donkeykong/.tox$ /usr/local/bin/virtualenv --distribute --no-site-packages -p /usr/bin/python2.7 py27 >py27/log/0.log
+New python executable in py27/bin/python2.7
+Also creating executable in py27/bin/python
+Installing setuptools, pip...done.
+Running virtualenv with interpreter /usr/bin/python2.7

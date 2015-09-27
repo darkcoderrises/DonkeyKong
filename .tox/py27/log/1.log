@@ -1,0 +1,35 @@
+/home/harshil/donkeykong/.tox/py27/log$ ../bin/pip install --download-cache=/home/harshil/donkeykong/.tox/_download pytest coveralls >1.log
+Downloading/unpacking pytest
+  Using download cache from /home/harshil/donkeykong/.tox/_download/https%3A%2F%2Fpypi.python.org%2Fpackages%2F3.4%2Fp%2Fpytest%2Fpytest-2.8.0-py2.py3-none-any.whl
+Downloading/unpacking coveralls
+  Downloading coveralls-1.0-py2.py3-none-any.whl
+  Storing download in cache at /home/harshil/donkeykong/.tox/_download/https%3A%2F%2Fpypi.python.org%2Fpackages%2F2.7%2Fc%2Fcoveralls%2Fcoveralls-1.0-py2.py3-none-any.whl
+Downloading/unpacking py>=1.4.29 (from pytest)
+  Using download cache from /home/harshil/donkeykong/.tox/_download/https%3A%2F%2Fpypi.python.org%2Fpackages%2F2.7%2Fp%2Fpy%2Fpy-1.4.30-py2.py3-none-any.whl
+Downloading/unpacking docopt>=0.6.1 (from coveralls)
+  Downloading docopt-0.6.2.tar.gz
+  Storing download in cache at /home/harshil/donkeykong/.tox/_download/https%3A%2F%2Fpypi.python.org%2Fpackages%2Fsource%2Fd%2Fdocopt%2Fdocopt-0.6.2.tar.gz
+  Running setup.py (path:/home/harshil/donkeykong/.tox/py27/build/docopt/setup.py) egg_info for package docopt
+    
+Downloading/unpacking coverage>=3.6 (from coveralls)
+  Storing download in cache at /home/harshil/donkeykong/.tox/_download/https%3A%2F%2Fpypi.python.org%2Fpackages%2Fsource%2Fc%2Fcoverage%2Fcoverage-4.0.tar.gz
+  Running setup.py (path:/home/harshil/donkeykong/.tox/py27/build/coverage/setup.py) egg_info for package coverage
+    
+Downloading/unpacking requests>=1.0.0 (from coveralls)
+  Storing download in cache at /home/harshil/donkeykong/.tox/_download/https%3A%2F%2Fpypi.python.org%2Fpackages%2F2.7%2Fr%2Frequests%2Frequests-2.7.0-py2.py3-none-any.whl
+Installing collected packages: pytest, coveralls, py, docopt, coverage, requests
+  Running setup.py install for docopt
+    
+  Running setup.py install for coverage
+    building 'coverage.tracer' extension
+    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c coverage/ctracer/datastack.c -o build/temp.linux-x86_64-2.7/coverage/ctracer/datastack.o
+    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c coverage/ctracer/filedisp.c -o build/temp.linux-x86_64-2.7/coverage/ctracer/filedisp.o
+    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c coverage/ctracer/module.c -o build/temp.linux-x86_64-2.7/coverage/ctracer/module.o
+    x86_64-linux-gnu-gcc -pthread -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -fPIC -I/usr/include/python2.7 -c coverage/ctracer/tracer.c -o build/temp.linux-x86_64-2.7/coverage/ctracer/tracer.o
+    x86_64-linux-gnu-gcc -pthread -shared -Wl,-O1 -Wl,-Bsymbolic-functions -Wl,-Bsymbolic-functions -Wl,-z,relro -fno-strict-aliasing -DNDEBUG -g -fwrapv -O2 -Wall -Wstrict-prototypes -D_FORTIFY_SOURCE=2 -g -fstack-protector --param=ssp-buffer-size=4 -Wformat -Werror=format-security build/temp.linux-x86_64-2.7/coverage/ctracer/datastack.o build/temp.linux-x86_64-2.7/coverage/ctracer/filedisp.o build/temp.linux-x86_64-2.7/coverage/ctracer/module.o build/temp.linux-x86_64-2.7/coverage/ctracer/tracer.o -o build/lib.linux-x86_64-2.7/coverage/tracer.so
+    
+    Installing coverage2 script to /home/harshil/donkeykong/.tox/py27/bin
+    Installing coverage-2.7 script to /home/harshil/donkeykong/.tox/py27/bin
+    Installing coverage script to /home/harshil/donkeykong/.tox/py27/bin
+Successfully installed pytest coveralls py docopt coverage requests
+Cleaning up...

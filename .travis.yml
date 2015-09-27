@@ -1,13 +1,20 @@
 language: python 
 python:
-    - "2.6"
+    - "2.7"
+
+env:
+    - TOX_ENV=py33
 
 sudo: required
 
 install:
-    - pip install os
-    - pip install random
-    - pip install sys
-    - pip install time
+    - pip install python-coveralls
+    - pip install coverage
+    - pip install nose
+    - pip install tox
 
-script: nosetests
+script: tox
+
+
+after_success:
+    - coveralls

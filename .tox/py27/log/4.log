@@ -1,0 +1,6 @@
+/home/harshil/donkeykong/.tox/py27/log$ ../bin/pip install --download-cache=/home/harshil/donkeykong/.tox/_download ../../dist/UNKNOWN-0.0.0.zip >4.log
+Unpacking /home/harshil/donkeykong/.tox/dist/UNKNOWN-0.0.0.zip
+  Running setup.py (path:/tmp/pip-U9Hds3-build/setup.py) egg_info for package from file:///home/harshil/donkeykong/.tox/dist/UNKNOWN-0.0.0.zip
+    
+  Requirement already satisfied (use --upgrade to upgrade): UNKNOWN==0.0.0 from file:///home/harshil/donkeykong/.tox/dist/UNKNOWN-0.0.0.zip in /home/harshil/donkeykong/.tox/py27/lib/python2.7/site-packages
+Cleaning up...

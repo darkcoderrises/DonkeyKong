@@ -137,14 +137,10 @@ class Board(object):
         donkeyi = self.floor[-2:-1][0] - 1
         donkeyj = 0
         PLACED = False
-        Moves = 0
 
         while not PLACED:
-            Moves += 1
-            if Moves == 20:
-                return
             donkeyj = random.randint(1, COLUMNS - 1)
-            if self.orign[donkeyi][donkeyj] == 0 and self.orign[donkeyi + 1][donkeyj] == 1:
+            if self.orign[donkeyi][donkeyj] == 0 and self.orign[donkeyi + 1][donkeyj] == 1 and self.board[donkeyi][donkeyj] != DONKEYCHAR:
                 PLACED = True
                 self.board[donkeyi][donkeyj] = DONKEYCHAR
         self.Donkey.append(Donkey(donkeyi, donkeyj))
@@ -188,8 +184,8 @@ class Board(object):
                     set(self, i, j)
 
             else:
-                colX = random.randint(0, COLUMNS / 2 - 1)
-                colY = random.randint(COLUMNS / 2, COLUMNS - 1)
+                colX = random.randint(0, COLUMNS / 2 - 4)
+                colY = random.randint(COLUMNS / 2 + 4, COLUMNS - 1)
 
                 for j in xrange(colX, colY + 1):
                     set(self, i, j)
@@ -244,6 +240,7 @@ class Board(object):
         rand = random.randint(0, 1)
 
         if self.checkBlocking(newX, newY) or self.checkFireball(newX, newY):
+            print "YAY"
             if rand:
                 Fireball.changeDir()
             return Fireball

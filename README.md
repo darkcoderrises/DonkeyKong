@@ -1,15 +1,27 @@
 # DonkeyKong
 
 Harshil Goel
+
 201401171
+
 DonkeyKong Assignment 
+
 UG2 CSE
 
+
+<a href='https://coveralls.io/github/darkcoderrises/DonkeyKong?branch=master'><img src='https://coveralls.io/repos/darkcoderrises/DonkeyKong/badge.svg?branch=master&service=github' alt='Coverage Status' /></a>
+
+
 python donkeykong.py to play
+
 board.py contains main algorithm of play
+
 person.py defines person class
+
 player.py defines player class
+
 donkey.py defines donkey class 
+
 fireball.py defines fireball class
 
 Key Points: 

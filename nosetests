@@ -1,1 +1,4 @@
 python test_donkey.py
+python test_fireball.py
+python test_coin.py
+python test_princess.py
