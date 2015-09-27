@@ -5,7 +5,9 @@ python:
 sudo: required
 
 install:
-    - pip install .
-    - pip install os,random
+    - pip install os
+    - pip install random
+    - pip install sys
+    - pip install time
 
 script: nosetests
