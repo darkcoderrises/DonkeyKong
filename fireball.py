@@ -1,7 +1,11 @@
+'''Fireball Class'''
 from person import Person
 
+
 class Fireball():
+
     '''Fireballs emmited by donkey'''
+
     def __init__(self, x, y, dir):
         self.posX = x
         self.posY = y

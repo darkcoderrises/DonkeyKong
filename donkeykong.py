@@ -1,4 +1,6 @@
+'''Main Game'''
 import game
 
-b = game.Board()
-b.play()
+if __name__ == "__main__":
+    b = game.Board()
+    b.play()

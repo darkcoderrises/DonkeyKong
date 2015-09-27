@@ -1,14 +1,17 @@
+'''Donkey Class'''
 from person import Person
 from fireball import Fireball
 import random
 
+
 class Donkey(Person):
+
     '''Donkey present in the Game '''
 
-    def emit(self, board):
+    def emit(self):
         '''Protocol to emit a new FireBall'''
         Direction = random.randint(0, 1)
-        fireball = Fireball(self.posX, self.posY, 1-2*Direction)
+        fireball = Fireball(self.posX, self.posY, 1 - 2 * Direction)
 
         self.Fireballs.append(fireball)
         self.times = 0
@@ -31,4 +34,3 @@ class Donkey(Person):
         self.Fireballs = Fireballs
         self.times = times
         self.reset = reset
-
